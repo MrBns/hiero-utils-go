@@ -2,10 +2,7 @@ module github.com/mrbns/hiero-utils-go
 
 go 1.25.3
 
-require (
-	github.com/hiero-ledger/hiero-sdk-go/v2 v2.72.0
-	github.com/mrbns/gokit v1.0.2-0.20251027224925-a92e0e1ebdae
-)
+require github.com/hiero-ledger/hiero-sdk-go/v2 v2.72.0
 
 require (
 	github.com/btcsuite/btcd/btcec/v2 v2.3.5 // indirect

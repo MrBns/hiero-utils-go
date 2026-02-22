@@ -1,15 +1,5 @@
 package mirrornode
 
-import (
-	"encoding/json"
-	"fmt"
-	"net/http"
-	"net/url"
-	"strconv"
-
-	bns "github.com/mrbns/gokit/utility"
-)
-
 // TopicMessage
 type TopicMessage struct {
 	ChunkInfo          *ChunkInfo `json:"chunk_info"`
@@ -55,41 +45,4 @@ type GetTopicMessagesByIdOptions struct {
 type GetTopicMessagesResponse struct {
 	Links    *Links         `json:"links,omitempty"`
 	Messages []TopicMessage `json:"messages,omitempty"`
-}
-
-func GetTopicMessagesById(options GetTopicMessagesByIdOptions) (*GetTopicMessagesResponse, error) {
-	if options.TopicId == "" {
-		return nil, fmt.Errorf("please provide a valid topic id")
-	}
-
-	searchParams := url.Values{}
-	searchParams.Add("encoding", bns.Ternary(options.Encoding != "", options.Encoding, "base64"))
-	searchParams.Add("limit", strconv.FormatInt(bns.Ternary(options.Limit > 0, options.Limit, 50), 10))
-
-	if options.Order == "asc" || options.Order == "desc" {
-		searchParams.Add("order", options.Order)
-	}
-
-	if options.Sequencenumber > 0 {
-		searchParams.Add("sequencenumber", strconv.FormatInt(options.Sequencenumber, 10))
-	}
-
-	searchParamsString := searchParams.Encode()
-	resp, err := http.Get(api_url(fmt.Sprintf("/api/v1/topics/%v/messages?%v", options.TopicId, searchParamsString)))
-	if err != nil {
-		return nil, err
-	}
-	resp.Body.Close()
-	err = checkApiStatus(resp)
-	if err != nil {
-		return nil, err
-	}
-
-	topicMessages := new(GetTopicMessagesResponse)
-	err = json.NewDecoder(resp.Body).Decode(topicMessages)
-	if err != nil {
-		return nil, err
-	}
-
-	return topicMessages, nil
 }
