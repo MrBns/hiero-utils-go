@@ -1,13 +1,16 @@
 module github.com/mrbns/hiero-utils-go
 
-go 1.25.3
+go 1.26.0
 
 require github.com/hiero-ledger/hiero-sdk-go/v2 v2.72.0
+
+require golang.org/x/term v0.36.0 // indirect
 
 require (
 	github.com/btcsuite/btcd/btcec/v2 v2.3.5 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.4.0 // indirect
+	github.com/gookit/goutil v0.7.3
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect

@@ -28,19 +28,6 @@ type TransactionID struct {
 	TransactionValidStart *string `json:"transaction_valid_start,omitempty"`
 }
 
-type GetTopicMessagesByIdOptions struct {
-	Encoding       string
-	Limit          int64
-	Sequencenumber int64
-
-	// The order in which items are listed either  "asc" or "desc"
-	Order string
-
-	// The consensus timestamp as a Unix timestamp in seconds.nanoseconds format with an
-	// Timestamp []string
-	TopicId string
-}
-
 // TopicMessagesResponse
 type GetTopicMessagesResponse struct {
 	Links    *Links         `json:"links,omitempty"`
