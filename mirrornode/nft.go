@@ -19,6 +19,8 @@ type NFTCollectionPage struct {
 }
 
 // Get Nft Info.
+//
+// it doesn't handle metadata_uri base64 decoding.
 func (c *Client) GetNftInfo(ctx context.Context, nftID string) (*NFT, error) {
 	if c == nil {
 		return nil, errors.New("mirror node client is nil")

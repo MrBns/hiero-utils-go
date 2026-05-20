@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	hiero "github.com/hiero-ledger/hiero-sdk-go/v2/sdk"
 )
 
 func IsNftId(s string) error {
@@ -72,4 +74,16 @@ func IsAllNftIds(values ...string) error {
 		}
 	}
 	return nil
+}
+
+func NftIdFromTokenAndSerial(tokenId string, serial int64) (hiero.NftID, error) {
+	tokenID, err := hiero.TokenIDFromString(tokenId)
+	if err != nil {
+		return hiero.NftID{}, nil
+	}
+
+	return hiero.NftID{
+		TokenID:      tokenID,
+		SerialNumber: serial,
+	}, nil
 }
