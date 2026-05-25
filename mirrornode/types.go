@@ -9,7 +9,7 @@ const (
 )
 
 const (
-	mainnetBaseURL    = "https://mainnet-public.mirrornode.hedera.com"
+	mainnetBaseURL    = "https://mainnet.mirrornode.hedera.com"
 	testnetBaseURL    = "https://testnet.mirrornode.hedera.com"
 	previewnetBaseURL = "https://previewnet.mirrornode.hedera.com"
 )

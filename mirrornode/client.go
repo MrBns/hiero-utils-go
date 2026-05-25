@@ -2,6 +2,7 @@ package mirrornode
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -14,7 +15,14 @@ type Client struct {
 	httpClient *http.Client
 }
 
+type ClientOptions struct {
+	Network    NetworkType
+	BaseURL    string
+	HttpClient *http.Client
+}
+
 func NewClient(network NetworkType) (*Client, error) {
+
 	baseURL, err := baseURLForNetwork(network)
 	if err != nil {
 		return nil, err
@@ -25,6 +33,33 @@ func NewClient(network NetworkType) (*Client, error) {
 		baseURL:    baseURL,
 		httpClient: http.DefaultClient,
 	}, nil
+}
+
+func NewClientWithOptions(opts ClientOptions) (*Client, error) {
+	var client = &Client{}
+
+	if opts.Network != "" {
+		client.network = opts.Network
+	} else {
+		return nil, errors.New("client cannot be nil")
+	}
+
+	if opts.BaseURL != "" {
+		client.baseURL = opts.BaseURL
+	} else {
+		baseURL, err := baseURLForNetwork(opts.Network)
+		if err != nil {
+			return nil, err
+		}
+		client.baseURL = baseURL
+	}
+
+	if opts.HttpClient != nil {
+		client.httpClient = opts.HttpClient
+	} else {
+		client.httpClient = &http.Client{}
+	}
+	return client, nil
 }
 
 func (c *Client) doGet(ctx context.Context, path string) (*http.Response, error) {
