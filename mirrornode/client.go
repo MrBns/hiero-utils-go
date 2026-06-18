@@ -79,6 +79,10 @@ func (c *Client) doGet(ctx context.Context, path string) (*http.Response, error)
 	}
 
 	if err := checkAPIStatus(resp); err != nil {
+		// checkAPIStatus has already drained the body, so closing it here
+		// releases the connection instead of leaking it. The caller receives a
+		// nil response on error and therefore cannot close it itself.
+		resp.Body.Close()
 		return nil, err
 	}
 

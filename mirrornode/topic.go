@@ -28,6 +28,7 @@ func (client *Client) GetTopicLastMessage(ctx context.Context, topicID string) (
 	if err != nil {
 		return nil, err
 	}
+	defer resp.Body.Close()
 
 	var topicMessages GetTopicMessagesResponse
 	if err := json.NewDecoder(resp.Body).Decode(&topicMessages); err != nil {

@@ -43,6 +43,7 @@ func (iter *TransactionIterator) Values(ctx context.Context) ([]Transaction, err
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 
 	var data GetTransactionsResponse
 
